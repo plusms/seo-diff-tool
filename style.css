@@ -1,7 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
 
 :root {
-    /* Moe Moe Palette */
+    /* Default Professional Key (Dark) */
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --primary-solid: #818cf8;
+    --accent-color: #94a3b8;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: rgba(148, 163, 184, 0.1);
+    --input-bg: rgba(15, 23, 42, 0.5);
+    --font-main: 'Outfit', 'Zen Kaku Gothic New', sans-serif;
+    --shadow-main: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    /* Transitions */
+    --transition-speed: 0.3s;
+    --transition-curve: ease;
+
+    /* Background Pattern */
+    --bg-pattern-image:
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
+    --bg-pattern-size: 100% 100%;
+}
+
+body.moe-mode {
+    /* Moe Moe Palette (Pink) */
     --bg-color: #fff0f5;
     /* Lavender Blush */
     --card-bg: rgba(255, 255, 255, 0.85);
@@ -14,7 +40,15 @@
     --border-color: #ffdde1;
     --input-bg: #fff;
     --font-main: 'M PLUS Rounded 1c', sans-serif;
-    --shadow-cute: 0 10px 20px rgba(255, 182, 193, 0.4);
+    --shadow-main: 0 10px 20px rgba(255, 182, 193, 0.4);
+
+    /* Bouncy Transitions */
+    --transition-speed: 0.4s;
+    --transition-curve: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* Polka Dots */
+    --bg-pattern-image: radial-gradient(circle, #ffdee9 2px, transparent 2.5px);
+    --bg-pattern-size: 30px 30px;
 }
 
 body {
@@ -22,43 +56,89 @@ body {
     padding: 0;
     font-family: var(--font-main);
     background-color: var(--bg-color);
-    background-image:
-        radial-gradient(circle, #ffdee9 2px, transparent 2.5px);
-    background-size: 30px 30px;
-    /* Polka dots */
+    background-image: var(--bg-pattern-image);
+    background-size: var(--bg-pattern-size);
     color: var(--text-primary);
     min-height: 100vh;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 40px 20px;
+    position: relative;
+}
+
+/* Theme Toggle Button */
+.theme-switch-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.theme-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: var(--font-main);
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn:hover {
+    border-color: var(--primary-solid);
+}
+
+body.moe-mode .theme-btn {
+    border: 2px solid var(--border-color);
+    color: var(--primary-solid);
+    font-weight: bold;
 }
 
 header {
     text-align: center;
     margin-bottom: 50px;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+body.moe-mode header {
     animation: bounceIn 1s ease;
 }
 
 header h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
+    font-size: 3rem;
+    font-weight: 700;
     margin: 0;
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+}
+
+body.moe-mode header h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
     text-shadow: 2px 2px 0px rgba(255, 182, 193, 0.3);
     letter-spacing: 2px;
 }
 
 header p {
     color: var(--accent-color);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-top: 10px;
+}
+
+body.moe-mode header p {
     font-weight: 500;
+    font-size: 1.2rem;
 }
 
 main {
@@ -69,18 +149,25 @@ main {
 
 .config-panel {
     background: var(--card-bg);
-    border: 3px solid var(--border-color);
-    border-radius: 30px;
-    padding: 40px;
-    backdrop-filter: blur(5px);
-    box-shadow: var(--shadow-cute);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-main);
     animation: fadeInUp 0.8s ease-out;
     position: relative;
     overflow: hidden;
 }
 
-/* Cute ribbon decoration maybe? */
-.config-panel::before {
+body.moe-mode .config-panel {
+    border: 3px solid var(--border-color);
+    border-radius: 30px;
+    padding: 40px;
+    backdrop-filter: blur(5px);
+}
+
+/* Cute ribbon only in Moe mode */
+body.moe-mode .config-panel::before {
     content: '';
     position: absolute;
     top: 0;
@@ -96,9 +183,15 @@ main {
 
 .input-group label {
     display: block;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+body.moe-mode .input-group label {
     font-size: 1rem;
     color: var(--primary-solid);
-    margin-bottom: 8px;
     font-weight: 800;
 }
 
@@ -106,22 +199,31 @@ input[type="text"],
 input[type="password"],
 input[type="url"] {
     width: 100%;
-    padding: 15px 20px;
+    padding: 12px 16px;
     background: var(--input-bg);
-    border: 2px solid var(--border-color);
-    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
     color: var(--text-primary);
     font-family: var(--font-main);
     font-size: 1rem;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    /* Bouncy */
+    transition: all var(--transition-speed) var(--transition-curve);
     box-sizing: border-box;
+}
+
+body.moe-mode input {
+    padding: 15px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.02);
 }
 
 input:focus {
     outline: none;
     border-color: var(--primary-solid);
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
+}
+
+body.moe-mode input:focus {
     box-shadow: 0 0 0 5px rgba(255, 117, 140, 0.2);
     transform: scale(1.02);
 }
@@ -145,62 +247,99 @@ input[type="file"] {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    padding: 20px;
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+}
+
+body.moe-mode .file-upload-label {
     padding: 25px;
     border: 3px dashed var(--border-color);
     border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
     background: #fff;
-    color: var(--text-secondary);
 }
 
 .file-upload-label:hover {
     border-color: var(--primary-solid);
+    background: rgba(129, 140, 248, 0.05);
+}
+
+body.moe-mode .file-upload-label:hover {
     background: #fff0f5;
     transform: rotate(-1deg) scale(1.02);
 }
 
 .icon {
+    font-size: 1.5rem;
+}
+
+body.moe-mode .icon {
     font-size: 2rem;
 }
 
 .primary-btn {
     width: 100%;
-    padding: 20px;
-    margin-top: 20px;
+    padding: 16px;
+    margin-top: 10px;
     border: none;
-    border-radius: 50px;
+    border-radius: 12px;
     background: var(--primary-gradient);
     color: white;
-    font-size: 1.4rem;
-    font-weight: 800;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* Bouncy spring */
-    box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+    transition: all var(--transition-speed) var(--transition-curve);
     position: relative;
     overflow: hidden;
+}
+
+body.moe-mode .primary-btn {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+}
+
+body.moe-mode .primary-btn:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 15px 30px rgba(255, 117, 140, 0.6);
 }
 
 .primary-btn:active {
+    transform: translateY(0);
+}
+
+body.moe-mode .primary-btn:active {
     transform: translateY(2px) scale(0.95);
 }
 
 /* Results Section */
 .results-panel {
     background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    margin-top: 20px;
+    box-shadow: var(--shadow-main);
+}
+
+body.moe-mode .results-panel {
     border: 3px solid var(--border-color);
     border-radius: 30px;
     padding: 40px;
     backdrop-filter: blur(5px);
-    margin-top: 20px;
-    box-shadow: var(--shadow-cute);
 }
 
 .results-panel h2 {
@@ -218,15 +357,21 @@ input[type="file"] {
 
 /* Loading Animation */
 .loader {
-    width: 25px;
-    height: 25px;
-    border: 4px solid #ffffff;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ffffff;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
     animation: rotation 1s linear infinite;
     vertical-align: middle;
     margin-left: 10px;
+}
+
+body.moe-mode .loader {
+    width: 25px;
+    height: 25px;
+    border: 4px solid #ffffff;
 }
 
 @keyframes rotation {
@@ -236,6 +381,30 @@ input[type="file"] {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -259,31 +428,30 @@ input[type="file"] {
     }
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Markdown Table Styles - Cute Version */
+/* Markdown Table Styles */
 .markdown-body table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
     margin: 20px 0;
     color: var(--text-primary);
+}
+
+body.moe-mode .markdown-body table {
+    border-collapse: separate;
+    border-spacing: 0;
     border-radius: 15px;
     overflow: hidden;
     border: 2px solid var(--border-color);
 }
 
 .markdown-body th {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+body.moe-mode .markdown-body th {
     background: #ffe3e8;
     color: var(--primary-solid);
     padding: 15px;
@@ -292,23 +460,27 @@ input[type="file"] {
 }
 
 .markdown-body td {
-    padding: 15px;
+    padding: 12px;
     border-bottom: 1px solid var(--border-color);
     line-height: 1.6;
+}
+
+body.moe-mode .markdown-body td {
+    padding: 15px;
     background: #fff;
     vertical-align: top;
 }
 
-.markdown-body tr:last-child td {
+body.moe-mode .markdown-body tr:last-child td {
     border-bottom: none;
 }
 
-.markdown-body tr:nth-child(even) td {
+body.moe-mode .markdown-body tr:nth-child(even) td {
     background: #fffafb;
 }
 
-/* Priority Colors */
-.markdown-body td:first-child {
+/* Priority Colors for Moe Mode */
+body.moe-mode .markdown-body td:first-child {
     font-weight: 800;
     text-align: center;
     color: var(--primary-solid);
