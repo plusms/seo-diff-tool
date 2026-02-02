@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Diff Analysis ♡</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>SEO Diff Analyzer ♡</h1>
+            <p>(◕‿◕✿) AIがあなたのサイトをもっと可愛く...じゃなくて強くするよ！</p>
+        </header>
+
+        <main>
+            <section class="config-panel">
+                <div class="input-group">
+                    <label for="apikey">✨ Gemini API Key</label>
+                    <input type="password" id="apikey" value="AIzaSyAR2Zcx7XUXg4UmTCeyCaPXdfTcZcUDYIk"
+                        placeholder="ヒミツの鍵を入力してね...">
+                    <small>※キーはブラウザにしか保存されないから安心してね！</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="targetUrl">🔗 Target URL</label>
+                    <input type="url" id="targetUrl" placeholder="https://your-site.com/article">
+                </div>
+
+                <div class="input-group">
+                    <label>⭐ Keywords (3つまで)</label>
+                    <div class="keywords-row">
+                        <input type="text" class="keyword-input" placeholder="キーワード 1">
+                        <input type="text" class="keyword-input" placeholder="キーワード 2">
+                        <input type="text" class="keyword-input" placeholder="キーワード 3">
+                    </div>
+                </div>
+
+                <div class="input-group file-upload-group">
+                    <label for="diffFile" class="file-upload-label">
+                        <span class="icon">📂</span>
+                        <span id="fileName">Diff HTMLをえらんでね</span>
+                    </label>
+                    <input type="file" id="diffFile" accept=".html,.htm,.txt">
+                </div>
+
+                <button id="analyzeBtn" class="primary-btn">
+                    <span class="btn-text">分析ビーム発射！ (∩^o^)⊃━☆ﾟ.*･｡</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </section>
+
+            <section id="resultsSection" class="results-panel hidden">
+                <h2>♡ 分析レポート ♡</h2>
+                <div id="markdownOutput" class="markdown-body"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
