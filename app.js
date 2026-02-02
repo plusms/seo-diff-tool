@@ -384,3 +384,73 @@ function parsePlainTextDiff(text) {
 
     return changes;
 }
+
+// --- Theme Switcher Logic ---
+
+const themeBtn = document.getElementById('themeToggle');
+const body = document.body;
+
+// Elements that need text swapping
+const textElements = document.querySelectorAll('[data-moe-text]');
+const placeholderElements = document.querySelectorAll('[data-moe-placeholder]');
+
+// Initialize Theme
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'moe') {
+        enableMoeMode();
+    } else {
+        disableMoeMode();
+    }
+}
+
+function enableMoeMode() {
+    body.classList.add('moe-mode');
+    themeBtn.textContent = 'Switch to Professional';
+
+    // Swap Text
+    textElements.forEach(el => {
+        if (!el.dataset.originalText) el.dataset.originalText = el.textContent;
+        el.textContent = el.dataset.moeText;
+    });
+
+    // Swap Placeholders
+    placeholderElements.forEach(el => {
+        if (!el.dataset.originalPlaceholder) el.dataset.originalPlaceholder = el.placeholder;
+        el.placeholder = el.dataset.moePlaceholder;
+    });
+
+    localStorage.setItem('theme', 'moe');
+}
+
+function disableMoeMode() {
+    body.classList.remove('moe-mode');
+    themeBtn.textContent = '♡ Switch to Moe Mode';
+
+    // Restore Text
+    textElements.forEach(el => {
+        if (el.dataset.originalText) {
+            el.textContent = el.dataset.originalText;
+        }
+    });
+
+    // Restore Placeholders
+    placeholderElements.forEach(el => {
+        if (el.dataset.originalPlaceholder) {
+            el.placeholder = el.dataset.originalPlaceholder;
+        }
+    });
+
+    localStorage.setItem('theme', 'professional');
+}
+
+themeBtn.addEventListener('click', () => {
+    if (body.classList.contains('moe-mode')) {
+        disableMoeMode();
+    } else {
+        enableMoeMode();
+    }
+});
+
+// Run init on load
+initTheme();
